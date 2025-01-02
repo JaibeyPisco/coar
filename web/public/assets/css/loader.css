@@ -1,0 +1,48 @@
+.loader-body {
+  width: 100%;
+  height: 100vh;
+  background-color: #105F8F;
+  position: fixed;
+  z-index: 10000;
+  visibility: visible;
+  top: 0;
+  left: 0;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  transition: 0.5s all;
+ 
+  /* background: url(../images/logos/fondo_login.jpg), #105F8F; */
+  background: url(../images/logos/logo_coar_transprarente.png), #105F8F;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 400px 200px;
+  background-position: center;
+  background-position: 50% 40%;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 3px #ffffff solid;
+  border-radius: 50%;
+  position: absolute;
+  border-top-color: #EFC241;
+  transform: translate(-50%, -50%);
+  top: 65%;
+  left: 50%;
+  -webkit-animation: 1s spin infinite linear;
+  -o-animation: 1s spin infinite linear;
+  animation: 1s spin infinite linear;
+}
+.loader-body.done {
+  visibility: hidden;
+  opacity: 0;
+}
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

@@ -1,0 +1,237 @@
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Consulta de Facturas - TitanicSoft</title>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+      <link href="assets/library/pro_fontawesome/css/all.css" rel="stylesheet">
+      <script type="text/javascript" src="assets/library/jquery/jquery-1.11.1.js"></script>
+      <style>@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+         body {
+            background-color: #fff;
+            font-family: 'Open Sans', serif;
+            
+            background: #000;
+            overflow: hidden;
+            background: #f39c12;
+            background: -webkit-linear-gradient(
+                rgba(114, 96, 89, 0.1),
+                rgba(234, 90, 38, 0.1)
+                ),
+                url(assets/images/bg_login.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #fff;
+            font-size:14px;
+         }
+
+         .tracking-detalle, .tracking-detalle td{
+             border-collapse: collapse !important;
+             padding: 0;
+         }
+
+         .icono_icon{
+            color: #fff;
+            margin-left: -9px;
+            margin-top: 8px;
+         }
+
+         .vertical_icon{
+            height: 80px; 
+            width:5px; 
+            background-color:#0092CE; 
+            float:left; 
+            margin-left: 14px;
+         }
+
+         .circle_icon{
+            width: 35px; 
+            height:35px; 
+            background-color:#0092CE; 
+            margin-top:25px; 
+            border-radius:50%;
+         }
+
+         .info_estado {
+             background-color: #fff;
+             border-radius: 10px;
+             padding: 5px;
+         }
+
+         label {
+            margin-bottom:0;
+         }
+
+
+         .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            font-size: 14px;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #6ebbe7;
+        }
+
+        .form-group{
+            margin-bottom:4px;
+        }
+
+        label{
+            font-weight:bold;
+        }
+        .form-control{
+            font-size:14px;
+        }
+
+      </style>
+   </head>
+   <body>
+        <div class="container" name="form-buscar" style="max-width:600px;">
+            <form style="background-color:#fff; border-radius: 8px; padding:30px; margin-top:20%; box-shadow: 0 3px 10px rgb(0 0 0 / 0.4);">
+                <div class="row">
+                    <div class="col-md-12" align="center" style="padding-bottom: 20px;">
+                        <img src="assets/images/logo_login.png" id="icon" alt="User Icon" style="max-width:200px; " />
+                    </div>
+                    <div class="col-md-12" style="color:#1F6CB6; font-weight:bold; text-align:center; font-size:18px;">
+                        CONSULTA DE COMPROBANTE ELECTRÓNICO
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>RUC de Empresa emisor</label>
+                            <input type="number" name="ruc_empresa" class="form-control" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tipo Comprobante</label>
+                            <select name="tipo_comprobante" class="form-control" required autocomplete="off">
+                                <option value="">Seleccione...</option>
+                                <option value="01">FACTURA ELECTRÓNICA</option>
+                                <option value="03">BOLETA DE VENTA</option>
+                                <option value="07">NOTA DE CRÉDITO</option>
+                                <option value="08">NOTA DE DÉBITO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Fecha de Emisión</label>
+                            <input type="date" name="fecha_emision" class="form-control" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Serie</label>
+                            <input type="text" name="serie" class="form-control" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Número</label>
+                            <input type="number" name="numero" class="form-control" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Importe Total</label>
+                            <input type="number" name="total_importe" class="form-control" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-12" align="center">
+                        <button type="submit" class="btn btn-primary">CONSULTAR</button>
+                    </div>
+                </div>
+            </form>
+        </div>  
+        
+        <div style="display: none;" name="resultados"></div>
+   </body>
+   <script>
+       let Componente = {
+
+        buscar: () => {
+            
+            let formData = new FormData(document.querySelector('form'));
+            
+            $.ajax({
+                method: "POST",
+                url: "server/public/publico/consulta_comprobante/get_comprobante",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json"
+            })
+            .done(function(data) {
+
+                if(data.respuesta == 'redireccionar')
+                {
+                    location.href = data.enlace;
+                }
+                else
+                {
+                    let html = `
+                        <div style="background-color: #fff; margin:auto; padding-top:50px;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6" align="center">
+                                        <img src="server/public/writable/images/`+data.logo+`" style="height:150px;">
+                                    </div>
+                                    <div class="col-md-6" style="text-align:center;">
+                                        <h5 style="color:#2f77b1; margin-bottom:0px;"><strong>`+data.comprobante+`</strong></h5>
+                                        <div style="margin-bottom:5px; color:#000;"><strong>`+data.serie+`-`+data.numero+`</strong></div>
+
+                                        <table class="styled-table" style="width:100%;">
+                                            <tr>
+                                                <td>CLIENTE:</td>   
+                                                <td>`+data.cliente+`</td>    
+                                            </tr>
+                                            <tr>
+                                                <td>TOTAL IMPORTE:</td>   
+                                                <td>`+data.simbolo_moneda+``+data.total_importe+`</td>    
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background-color:#F0F8FB; min-height:500px;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6" align="center">
+                                        <a href="`+data.ruta_pdf+`" class="btn btn-primary">DESCARGAR PDF</a>
+                                        <a href="`+data.ruta_xml+`" class="btn btn-secondary">DESCARGAR XML</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    $('div[name="resultados"]').html(html);
+                                    
+                    $('div[name="form-buscar"]').hide('slide');
+                    $('div[name="resultados"]').show('slide');
+                }
+                
+                
+            })
+            .fail(function(data)
+            {
+                alert(data.responseJSON.mensaje)
+            });
+        }
+
+       };
+
+       $("form").submit(function( event ) {            
+            event.preventDefault();
+            Componente.buscar();
+        });
+
+   </script>
+</html>
