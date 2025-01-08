@@ -1,5 +1,5 @@
 
-import indexHTML from './index.html.js';
+import indexHTML from './index.html.ts';
 import modalSave from './modalSave/index.js';
  import modalDelete from "./modalDelete/index.js";
 
