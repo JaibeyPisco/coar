@@ -46,9 +46,9 @@ const events = async () => {
                     ladda.stop();
 
                 }).catch(error => {
-                console.log(error);
-                ladda.stop();
-            });
+                    console.log(error);
+                    ladda.stop();
+                });
 
 
         } catch (error) {
@@ -84,8 +84,8 @@ const editar = (data) => {
 
     eView.querySelector('input[name="nombre"]').value = data.nombre;
 
-   let select = eView.querySelector('select[name="tipo"]');
-   select.value = data.tipo;
+    let select = eView.querySelector('select[name="tipo"]');
+    select.value = data.tipo;
     select.dispatchEvent(new Event('change', { bubbles: true }))
 
     eView.querySelector('input[name="color_bg"]').value = data.color_bg;
@@ -110,7 +110,7 @@ const cargar = async (element, callback, eName) => {
 
     $('#picker').farbtastic('#color');
 
-  await afterRender();
+    await afterRender();
 }
 
 

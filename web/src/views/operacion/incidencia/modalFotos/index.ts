@@ -10,7 +10,6 @@ const show = async (id_incidencia: number, id_incidencia_monitoreo?: number) => 
 
     try {
 
-        console.log({id_incidencia, id_incidencia_monitoreo});
         const tableBody = eView.querySelector('tbody[name="lista_fotos"]');
 
         if (!tableBody) {
@@ -24,11 +23,9 @@ const show = async (id_incidencia: number, id_incidencia_monitoreo?: number) => 
         if(id_incidencia_monitoreo != undefined){
             url += '/'+id_incidencia_monitoreo;
         }
-        const data = (await  axios.get(url)).data;
+        const data:any = (await  axios.get(url)).data;
 
-        console.log(data);
-
-        let html = '';
+        let html: string = '';
 
         data.forEach( (row: Archivo) => {
             html += `

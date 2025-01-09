@@ -11,11 +11,10 @@ export default class FotoComponent {
 
         _this = this;
 
-
-
     }
 
     render(_get) {
+        
         eView = _get.domElement;
 
         _callBackSubmit = _get.callBackSubmit;

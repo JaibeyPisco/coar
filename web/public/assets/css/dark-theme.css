@@ -695,14 +695,18 @@ html.dark-theme .select2-container--bootstrap-5 .select2-dropdown {
 
 
 html.dark-theme .form-control {
-  color: #c0c8d1;
-  background-color: #12181a;
-  border: 1px solid rgb(255 255 255 / 34%)
+  color: #c0c8d1 !important;
+  background-color: #12181a !important;
+  border: 1px solid rgb(255 255 255 / 34%) !important;
+
 }
-html.dark-theme .form-select {
-  color: #c0c8d1;
-  background-color: #12181a;
-  border: 1px solid rgb(255 255 255 / 34%)
+html.dark-theme .form-select,
+html.dark-theme .select2-container--default .select2-selection--single,
+
+html.dark-theme .select2-container--default .select2-selection--single .select2-selection__rendered{
+  color: #c0c8d1 !important;
+  background-color: #12181a !important;
+  border: 1px solid rgb(255 255 255 / 34%) !important
 }
 html.dark-theme .form-control:focus {
   box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25)
@@ -732,7 +736,7 @@ html.dark-theme .select2-dropdown {
 html.dark-theme .select2-search--dropdown .select2-search__field {
   border: 1px solid rgb(255 255 255 / 34%);
   background-color: rgb(255 255 255 / 14%);
-  color: #e3dfdf
+  /*color: #e3dfdf*/
 }
 html.dark-theme .select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice {
   color: #dee1e5;
@@ -761,9 +765,9 @@ html.dark-theme .bootstrap-tagsinput {
   color: #e5e0e0
 }
 html.dark-theme .input-group-text {
-  color: #d1d7de;
-  background-color: #3e464c;
-  border: 1px solid rgb(255 255 255 / 35%)
+  color: #d1d7de !important;
+  background-color: #3e464c !important;
+  border: 1px solid rgb(255 255 255 / 35%) !important
 }
 html.dark-theme .table-bordered td, html.dark-theme .table-bordered th {
   border: 1px solid rgb(255 255 255 / 12%)

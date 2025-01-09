@@ -15,14 +15,17 @@ let modalFotos_cls = null;
 
 let FotoComponent_cls = new FotoComponent();
 
-
 const show = async (data ) => {
 
     resetInfo();
 
     eData.id_incidencia = data.id;
 
-    listar_estados_monitoreo();
+    await modalFotos.load (
+        eView.querySelector ('modal-fotos-components')
+    );
+
+  await  listar_estados_monitoreo();
 
     HELPER.modalInstance(eView, 'elemento').show();
 
@@ -73,67 +76,65 @@ const listar_estados_monitoreo = async () => {
 
 
     let listadoMonitoreos = eView.querySelector('div[name="listar-estados-monitoreos"]');
+
     listadoMonitoreos.innerHTML = '';
 
     const data = (await  axios.get(BASE_API + 'operacion/Incidencia_monitoreo/get_listado_estados_monitoreo/'+eData.id_incidencia)).data;
 
-    let html =  ``;
+    let html =  '';
 
     data.forEach(row => {
 
         let codigo_aleatorio = Math.random().toString(36).substr(2);
         html +=  `
-         <!-- timeline item 1 event content -->
-    
-        <div class="col py-1" codigo="${codigo_aleatorio}">
-            <div class="card radius-15 shadow-sm border-0">
-        <div class="card-body p-2">
-            <!-- Encabezado -->
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="card-title text-muted mb-0">Estado: 
-                    <span class="badge" style="color: ${row.color_text}; background-color: ${row.color_bg}; padding: 3px 8px; border-radius: 5px;">
-                        ${row.estado_monitoreo}
-                    </span>
-                </h6>
-                <small class="text-muted">${HELPER.leerFecha(row.fecha_hora)}</small>
-            </div>
-            <hr/>
+                 <!-- timeline item 1 event content -->
             
-            <!-- Información principal -->
-            <table class="table table-borderless table-sm mb-0">
-                <tbody>
-                    <tr>
-                        <th class="text-muted">Usuario Responsable:</th>
-                        <td>${row.usuario}</td>
-                    </tr>
-                     <tr>
-                        <th class="text-muted">Fotos:</th>
-                        <td><span type="button" class="btn btn-success  btn-sm" name="row-fotos-estados" data-id="${row.id}"><i class="lni lni-eye"></i></span></td>
-                    </tr>
-                    <tr>
-                        <th class="text-muted">Estudiante:</th>
-                        <td>${row.apellidos_nombres} (DNI: ${row.dni})</td>
-                    </tr>
-                    <tr>
-                        <th class="text-muted">Problema:</th>
-                        <td>${row.problema}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-muted">Acuerdos:</th>
-                        <td>${row.acuerdos}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-muted">Descripción Privada:</th>
-                        <td>${row.descripcion_privada}</td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class="col py-1" codigo="${codigo_aleatorio}">
+                    <div class="card radius-15 shadow-sm border-0">
+                <div class="card-body p-2">
+                    <!-- Encabezado -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="card-title text-muted mb-0">Estado: 
+                            <span class="badge" style="color: ${row.color_text}; background-color: ${row.color_bg}; padding: 3px 8px; border-radius: 5px;">
+                                ${row.estado_monitoreo}
+                            </span>
+                        </h6>
+                        <small class="text-muted">${HELPER.leerFecha(row.fecha_hora)}</small>
+                    </div>
+                    <hr/>
+                    
+                    <!-- Información principal -->
+                    <table class="table table-borderless table-sm mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="text-muted">Usuario Responsable:</th>
+                                <td>${row.usuario}</td>
+                            </tr>
+                             <tr>
+                                <th class="text-muted">Fotos:</th>
+                                <td><span type="button" class="btn btn-success  btn-sm" name="row-fotos-estados" data-id="${row.id}"><i class="lni lni-eye"></i></span></td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Estudiante:</th>
+                                <td>${row.apellidos_nombres} (DNI: ${row.dni})</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Problema:</th>
+                                <td>${row.problema}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Acuerdos:</th>
+                                <td>${row.acuerdos}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Descripción Privada:</th>
+                                <td>${row.descripcion_privada}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-
-
     `;
     })
 
@@ -148,7 +149,7 @@ const listar_estados_monitoreo = async () => {
              const id = button.dataset.id;
 
             // Ejecutar la lógica deseada (por ejemplo, abrir un modal)
-            await modalFotos_cls.show(eData.id_incidencia, id);
+            await modalFotos.show(eData.id_incidencia, id);
         }
     });
 
@@ -160,7 +161,6 @@ const submit = function () {
     let ladda = HELPER.ladda('form[name="save-monitoreo"] button[type="submit"]');
 
     let formData = new FormData(eForm);
-
 
     formData.append('problema',  problema.getData());
     formData.append('acuerdos',  acuerdos.getData());
@@ -178,8 +178,6 @@ const submit = function () {
         data: formData
     })
         .then(async  function (response) {
-
-           // await nuevo()
 
             HELPER.notificacion(response.data.mensaje, 'success');
 
@@ -209,13 +207,6 @@ const after_render = async () => {
         }
     });
 
-    // await modalFotos.load (
-    //     eView.querySelector ('modal-fotos-components')
-    // );
-
-
-
-
     eForm.addEventListener('submit', function (e) {
         e.preventDefault();
         submit();
@@ -223,17 +214,6 @@ const after_render = async () => {
 
 
     await  select_estados_monitoreo();
-
-
-
-    let btnFotos = eView.querySelectorAll('button[name="row-fotos-estados"]');
-
-    console.log(btnFotos);
-
-
-
-
-
 
 }
 
@@ -251,8 +231,6 @@ const cargar = async(domElment, callback, modalFotos) =>{
     eForm = eView.querySelector('form[name="save-monitoreo"]');
 
     await  after_render();
-
-
 
 }
 export default {

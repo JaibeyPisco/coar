@@ -9,8 +9,10 @@ let Obj_router = async (router, d, data) => {
         {
             router.get('#/'+prefijo+'empresa', async function() {     
                 HELPER.active_sidebar('configuracion-empresa');   
-                let modulo = await import('../views/configuracion/Empresa.js');
-                modulo.default.render(d);
+
+                let modulo = await import('../views/configuracion/empresa/index.ts');
+
+                modulo.default(d);
             });
         }  
         
@@ -98,7 +100,7 @@ let Obj_router = async (router, d, data) => {
         {
             router.get('#/'+prefijo+'estado_monitoreo', async function() {
                 HELPER.active_sidebar('configuracion-estado_monitoreo');
-                let modulo = await import('../views/configuracion/estadoMonitoreo/index.js');
+                let modulo = await import('../views/configuracion/estadoMonitoreo/index.ts');
                 modulo.default(d);
             });
         }

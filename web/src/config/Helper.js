@@ -868,6 +868,34 @@ let HELPER = {
         }
     },
 
+    previewImage: function(input, dom) {
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                
+                dom.src = e.target.result;
+                dom.style.display = 'none';
+                dom.style.opacity = 0;
+                dom.style.display = 'block';
+
+                // Animación de fadeIn personalizada
+                let opacity = 0;
+
+                const fadeInEffect = setInterval(function() {
+                    if (opacity >= 1) {
+                        clearInterval(fadeInEffect);
+                    } else {
+                        opacity += 0.1;
+                        dom.style.opacity = opacity;
+                    }
+                }, 50);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    },
+
     get_attr_json: function(row) {
         let tr = row.parents('tr');
         let obj = JSON.parse(tr[0].dataset.json);
