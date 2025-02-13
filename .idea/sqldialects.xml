@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$USER_HOME$/Downloads/datos_padre.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Downloads/hrpjptbk_corporaciontranslay.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Downloads/hrpjptbk_heparsac.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Downloads/hrpjptbk_transcosise (1).sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Downloads/tpejosrz_courier_jaen.sql" dialect="MySQL" />
+  </component>
+</project>
